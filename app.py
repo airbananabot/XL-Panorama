@@ -52,28 +52,28 @@ def init():
     # ).to("cuda")
     # url = 'https://civitai.com/api/download/models/143197'
     # lora_path = 'ckpt/360XL.safetensors'
-    lora_path = '360XL.safetensors'
-    lora_ready = False
-    if(os.path.exists(lora_path)):
-        print("Lora already downloaded!")
-        lora_ready = True
-    else:
-        print("Downloading Lora...")
-        success = download_from_url(LORA, lora_path)
-        if success:
-            print("Download successful!")
-            lora_ready = True
-        else:
-            print("Lora Download failed!")
-    if not lora_ready:
-        print("Lora not ready!")
-    else:
-        print("Loading Lora...")
-        try:
-            model.load_lora_weights(lora_path)
-            print("Lora loaded!")
-        except Exception as e:
-            print(f"Error loading lora from {lora_path}. Error: {e}")
+    # lora_path = '360XL.safetensors'
+    # lora_ready = False
+    # if(os.path.exists(lora_path)):
+    #     print("Lora already downloaded!")
+    #     lora_ready = True
+    # else:
+    #     print("Downloading Lora...")
+    #     success = download_from_url(LORA, lora_path)
+    #     if success:
+    #         print("Download successful!")
+    #         lora_ready = True
+    #     else:
+    #         print("Lora Download failed!")
+    # if not lora_ready:
+    #     print("Lora not ready!")
+    # else:
+    #     print("Loading Lora...")
+    #     try:
+    #         model.load_lora_weights(lora_path)
+    #         print("Lora loaded!")
+    #     except Exception as e:
+    #         print(f"Error loading lora from {lora_path}. Error: {e}")
             
     context = {
         "model": model
