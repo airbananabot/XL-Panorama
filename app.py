@@ -46,11 +46,13 @@ def upload_to_blob(sas_uri: str, file_path: str) -> bool:
         return False
     
 def upload_from_buffer(sas_uri: str, file_buffer: BytesIO) -> bool:
+    print("Sending image to blob...")
     try:
         headers = {'x-ms-blob-type': 'BlockBlob'}
         response = requests.put(sas_uri, headers=headers, data=file_buffer.getvalue())
         
         if response.status_code == 201:
+            print("Image uploaded successfully!")
             return True
         else:
             print(f"Failed to upload file. Status code: {response.status_code}, Response: {response.text}")
@@ -117,7 +119,9 @@ def handler(context: dict, request: Request) -> Response:
     sasUri = request.json.get("sasUri")
     
     # Assuming the pipeline method remains the same
+    print("Generating image...")
     images = model(prompt=prompt,width=width,height=height).images[0]
+    print("Image generated...")
     buffered = BytesIO()
     images.save(buffered, format="JPEG", quality=80)
     # img_str = base64.b64encode(buffered.getvalue())
