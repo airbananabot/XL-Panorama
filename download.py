@@ -1,5 +1,5 @@
-# from diffusers import DiffusionPipeline
-from diffusers import StableDiffusionXLPipeline
+from diffusers import DiffusionPipeline
+# from diffusers import StableDiffusionXLPipeline
 import torch
 import requests
 
@@ -22,8 +22,8 @@ def download_from_url(url: str, destination_path: str) -> bool:
 
 def download_model() -> tuple:
     """Download the model"""
-    model = StableDiffusionXLPipeline.from_pretrained(MODEL, use_safetensors=True)
-    # model = DiffusionPipeline.from_pretrained(MODEL, use_safetensors=True)
+    # model = StableDiffusionXLPipeline.from_pretrained(MODEL, use_safetensors=True)
+    model = DiffusionPipeline.from_pretrained(MODEL, use_safetensors=True)
 
     # lora_path = 'ckpt/360XL.safetensors'
     lora_path = '360XL.safetensors'
