@@ -51,7 +51,8 @@ def init():
     #     variant="fp16",
     # ).to("cuda")
     # url = 'https://civitai.com/api/download/models/143197'
-    lora_path = 'ckpt/360XL.safetensors'
+    # lora_path = 'ckpt/360XL.safetensors'
+    lora_path = '360XL.safetensors'
     lora_ready = False
     if(os.path.exists(lora_path)):
         print("Lora already downloaded!")

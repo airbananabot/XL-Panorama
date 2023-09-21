@@ -25,7 +25,8 @@ def download_model() -> tuple:
     model = StableDiffusionXLPipeline.from_pretrained(MODEL, use_safetensors=True)
     # model = DiffusionPipeline.from_pretrained(MODEL, use_safetensors=True)
 
-    lora_path = 'ckpt/360XL.safetensors'
+    # lora_path = 'ckpt/360XL.safetensors'
+    lora_path = '360XL.safetensors'
     success = download_from_url(LORA, lora_path)
     if success:
         print("Download successful!")
