@@ -7,6 +7,18 @@
             "type": "string",
             "required": true,
             "default": "An astronaut riding a green horse"
+        },
+        {
+            "name": "height",
+            "description": "Height of the image",
+            "type": "number",
+            "default": 1024
+        },
+        {
+            "name": "width",
+            "description": "Width of the image",
+            "type": "number",
+            "default": 1024
         }
     ],
     "output": {

@@ -1,4 +1,5 @@
-from diffusers import DiffusionPipeline
+# from diffusers import DiffusionPipeline
+from diffusers import StableDiffusionXLPipeline
 import torch
 import requests
 
@@ -21,9 +22,10 @@ def download_from_url(url: str, destination_path: str) -> bool:
 
 def download_model() -> tuple:
     """Download the model"""
-    model = DiffusionPipeline.from_pretrained(MODEL, use_safetensors=True)
+    model = StableDiffusionXLPipeline.from_pretrained(MODEL, use_safetensors=True)
+    # model = DiffusionPipeline.from_pretrained(MODEL, use_safetensors=True)
 
-    lora_path = '360XL.safetensors'
+    lora_path = 'ckpt/360XL.safetensors'
     success = download_from_url(LORA, lora_path)
     if success:
         print("Download successful!")
@@ -34,6 +36,7 @@ def download_model() -> tuple:
             print(f"Error loading lora from {lora_path}. Error: {e}")
     else:
         print("Lora Download failed!")
+    print("download_model() complete!")
 
 if __name__ == "__main__":
     download_model()

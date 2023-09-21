@@ -4,6 +4,7 @@ from diffusers import StableDiffusionXLPipeline
 import torch
 import base64
 import requests
+import os
 from io import BytesIO
 
 MODEL = "stabilityai/stable-diffusion-xl-base-1.0"
@@ -49,20 +50,30 @@ def init():
     #     use_safetensors=True,
     #     variant="fp16",
     # ).to("cuda")
-    print("Downloading Lora...")
     # url = 'https://civitai.com/api/download/models/143197'
-    lora_path = '360XL.safetensors'
-    success = download_from_url(LORA, lora_path)
-    if success:
-        print("Download successful!")
+    lora_path = 'ckpt/360XL.safetensors'
+    lora_ready = False
+    if(os.path.exists(lora_path)):
+        print("Lora already downloaded!")
+        lora_ready = True
+    else:
+        print("Downloading Lora...")
+        success = download_from_url(LORA, lora_path)
+        if success:
+            print("Download successful!")
+            lora_ready = True
+        else:
+            print("Lora Download failed!")
+    if not lora_ready:
+        print("Lora not ready!")
+    else:
+        print("Loading Lora...")
         try:
             model.load_lora_weights(lora_path)
             print("Lora loaded!")
         except Exception as e:
             print(f"Error loading lora from {lora_path}. Error: {e}")
-    else:
-        print("Lora Download failed!")
-        
+            
     context = {
         "model": model
     }
@@ -73,9 +84,11 @@ def handler(context: dict, request: Request) -> Response:
     """Handle a request to generate image from a prompt."""
     model = context.get("model")
     prompt = request.json.get("prompt")
+    width = request.json.get("width")
+    height = request.json.get("height")
     
     # Assuming the pipeline method remains the same
-    images = model(prompt=prompt).images[0]
+    images = model(prompt=prompt,width=width,height=height).images[0]
     buffered = BytesIO()
     images.save(buffered, format="JPEG", quality=80)
     img_str = base64.b64encode(buffered.getvalue())
